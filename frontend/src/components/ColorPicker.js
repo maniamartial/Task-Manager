@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { BlockPicker } from "react-color";
+import { BlockPicker, SketchPicker } from "react-color";
 import { TextField, Box } from "@mui/material";
+import ColorBox from "./ColorBox";
 
 export default function ColorPicker({ onChange, value, error, helperText }) {
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
@@ -50,9 +51,8 @@ export default function ColorPicker({ onChange, value, error, helperText }) {
               left: "0px",
             }}
             onClick={handleClose}
-          >
-            <BlockPicker color={value} onChange={handleChangeColor} />
-          </Box>
+          />
+          <SketchPicker color={value} onChange={handleChangeColor} />
         </Box>
       ) : null}
     </div>
