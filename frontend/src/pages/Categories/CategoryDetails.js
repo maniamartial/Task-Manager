@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useRequestResource from "src/hooks/useRequestResource";
 import ColorPicker from "src/components/ColorPicker";
+import { SketchPicker } from "react-color";
 
 export default function CategoryDetails() {
   const { addResource, resource, getResource, updateResource } =
@@ -32,19 +33,23 @@ export default function CategoryDetails() {
     if (resource) {
       setInitialValues({
         name: resource.name,
-        color: resource.color,
+        color: `#${resource.color}`,
       });
     }
   });
   //posting data to the backend
   const handleSubmit = (values) => {
+    const formattedValues = {
+      name: values.name,
+      color: values.color.substring(1),
+    };
     if (id) {
-      updateResource(id, values, () => {
+      updateResource(id, formattedValues, () => {
         navigate("/categories");
       });
       return;
     }
-    addResource(values, () => {
+    addResource(formattedValues, () => {
       navigate("/categories");
     });
   };
@@ -78,13 +83,14 @@ export default function CategoryDetails() {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TextField
-                    fullWidth
+                  <ColorPicker
                     id="color"
-                    label="Color"
-                    {...formik.getFieldProps("color")}
-                    error={formik.touched.name && Boolean(formik.errors.name)}
-                    helperText={formik.touched.name && formik.errors.name}
+                    value={formik.values.color}
+                    onChange={(color) => {
+                      formik.setFieldValue("color", color.hex);
+                    }}
+                    error={formik.touched.color && Boolean(formik.errors.color)}
+                    helperText={formik.touched.color && formik.errors.color}
                   />
                 </Grid>
 
