@@ -21,6 +21,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import useRequestResource from "src/hooks/useRequestResource";
 import "bootstrap/dist/css/bootstrap.css";
+import ColorBox from "src/components/ColorBox";
 /*
 const results = [
   {
@@ -107,7 +108,9 @@ export default function Categories() {
               return (
                 <TableRow key={r.id}>
                   <TableCell align="left">{r.name}</TableCell>
-                  <TableCell align="left">{r.color}</TableCell>
+                  <TableCell align="left">
+                    <ColorBox color={`#${r.color}`} />
+                  </TableCell>
                   <TableCell align="right">
                     <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                       <Link to={`/categories/edit/${r.id}`} key="category-edit">

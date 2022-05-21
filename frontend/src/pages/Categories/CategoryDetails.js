@@ -5,6 +5,7 @@ import { Grid, TextField, Typography, Paper, Button, Box } from "@mui/material";
 import * as yup from "yup";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useRequestResource from "src/hooks/useRequestResource";
+import ColorPicker from "src/components/ColorPicker";
 
 export default function CategoryDetails() {
   const { addResource, resource, getResource, updateResource } =
