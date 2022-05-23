@@ -109,7 +109,7 @@ export default function Categories() {
                 <TableRow key={r.id}>
                   <TableCell align="left">{r.name}</TableCell>
                   <TableCell align="left">
-                    <ColorBox color={`#${r.color}`} />
+                    <ColorBox color={ `#${r.color}` } />
                   </TableCell>
                   <TableCell align="right">
                     <Box sx={{ display: "flex", justifyContent: "flex-end" }}>

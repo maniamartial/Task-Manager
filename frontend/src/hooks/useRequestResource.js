@@ -2,12 +2,26 @@ import { useCallback, useState } from "react";
 import axios from "axios";
 
 import React from "react";
+import { useSnackbar } from "notistack";
+import formatHttpApiError from "src/helpers/formatHttpError";
 
-export default function useRequestResource({ endpoint }) {
+export default function useRequestResource({ endpoint, resourceLabel }) {
   const [resourceList, setResourceList] = useState({
     results: [],
   });
+
   const [resource, setResource] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
+  const [error, setError] = useState(null);
+
+  const handleRequestResourceError = useCallback(
+    (err) => {
+      const formattedError = formatHttpApiError(err);
+      setError(formattedError);
+      enqueueSnackbar(formattedError);
+    },
+    [enqueueSnackbar, setError]
+  );
 
   //Fetching data from teh django backend
   const getResourceList = useCallback(() => {
@@ -18,10 +32,8 @@ export default function useRequestResource({ endpoint }) {
           results: res.data,
         });
       })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [endpoint]);
+      .catch(handleRequestResourceError);
+  }, [endpoint, handleRequestResourceError]);
   //end of fetching data
 
   //Posting data to the backend
@@ -30,13 +42,12 @@ export default function useRequestResource({ endpoint }) {
       axios
         .post(`/api/${endpoint}/`, values)
         .then(() => {
+          enqueueSnackbar(`${resourceLabel} added`);
           if (successCallback) {
             successCallback();
           }
         })
-        .catch((err) => {
-          console.error(err);
-        });
+        .catch(handleRequestResourceError);
     },
     [endpoint]
   );
@@ -49,11 +60,9 @@ export default function useRequestResource({ endpoint }) {
           const { data } = res;
           setResource(data);
         })
-        .catch((err) => {
-          console.error(err);
-        });
+        .catch(handleRequestResourceError);
     },
-    [endpoint]
+    [endpoint, handleRequestResourceError]
   );
 
   const updateResource = useCallback(
@@ -61,15 +70,14 @@ export default function useRequestResource({ endpoint }) {
       axios
         .patch(`/api/${endpoint}/${id}/`, values)
         .then(() => {
+          enqueueSnackbar(`${resourceLabel}/update`);
           if (successCallback) {
             successCallback();
           }
         })
-        .catch((err) => {
-          console.error(err);
-        });
+        .catch(handleRequestResourceError);
     },
-    [endpoint]
+    [endpoint, handleRequestResourceError]
   );
 
   const deleteResource = useCallback(
@@ -77,6 +85,7 @@ export default function useRequestResource({ endpoint }) {
       axios
         .delete(`/api/${endpoint}/${id}/`)
         .then(() => {
+          enqueueSnackbar(`${resourceLabel} deleted`);
           const newResourceList = {
             results: resourceList.results.filter((r) => {
               return r.id !== id;
@@ -84,13 +93,11 @@ export default function useRequestResource({ endpoint }) {
           };
           setResourceList(newResourceList);
         })
-        .catch((err) => {
-          console.error(err);
-        });
+        .catch(handleRequestResourceError);
     },
-    [endpoint, resourceList]
+    [endpoint, resourceList, handleRequestResourceError]
   );
-  //Return those functions
+
   return {
     resourceList,
     getResourceList,
@@ -99,5 +106,6 @@ export default function useRequestResource({ endpoint }) {
     getResource,
     updateResource,
     deleteResource,
+    error,
   };
 }
