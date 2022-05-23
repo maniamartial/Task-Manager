@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
-import Container from "@mui/material/Container";
-import { Grid, TextField, Typography, Paper, Button, Box } from "@mui/material";
+import { Grid, TextField, Button, Box } from "@mui/material";
 import * as yup from "yup";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useRequestResource from "src/hooks/useRequestResource";
 import ColorPicker from "src/components/ColorPicker";
-import { SketchPicker } from "react-color";
 
 const validationSchema = yup.object({
   name: yup.string().required("Name is required").max(100, "Max length is 100"),
@@ -33,7 +31,7 @@ export default function CategoryDetails() {
     if (id) {
       getResource(id);
     }
-  }, [id]);
+  }, [id, getResource]);
 
   useEffect(() => {
     if (resource) {
@@ -42,7 +40,7 @@ export default function CategoryDetails() {
         color: `#${resource.color}`,
       });
     }
-  });
+  }, [resource]);
   //posting data to the backend
   const handleSubmit = (values) => {
     const formattedValues = {
