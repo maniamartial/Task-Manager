@@ -8,10 +8,16 @@ import useRequestResource from "src/hooks/useRequestResource";
 import ColorPicker from "src/components/ColorPicker";
 import { SketchPicker } from "react-color";
 
+const validationSchema = yup.object({
+  name: yup.string().required("Name is required").max(100, "Max length is 100"),
+  color: yup.string().required("Color is required"),
+});
+
 export default function CategoryDetails() {
   const { addResource, resource, getResource, updateResource } =
     useRequestResource({
       endpoint: "categories",
+      resourceLabel: "Category",
     });
 
   const [initialValues, setInitialValues] = useState({
@@ -66,6 +72,7 @@ export default function CategoryDetails() {
         onSubmit={handleSubmit}
         initialValues={initialValues}
         enableReinitialize
+        validationSchema={validationSchema}
       >
         {(formik) => {
           return (
