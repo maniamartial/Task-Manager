@@ -8,7 +8,7 @@ export const LoadingOverlayResourceContext = React.createContext({
 });
 
 export default function LoadingOverlayResource({ children }) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const overlayValue = useMemo(() => {
     return { setLoading };
   }, [setLoading]);
@@ -25,7 +25,7 @@ export default function LoadingOverlayResource({ children }) {
       >
         <Backdrop
           sx={{
-            background: "rgba(0,0,0,0.1)",
+            background: "rgba(0,0,0,0.2)",
             display: "flex",
             width: "100%",
             height: "100vh",
