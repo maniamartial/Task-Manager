@@ -9,37 +9,44 @@ import { SnackbarProvider } from "notistack";
 import LoadingOverlayResource from "./components/LoadingOverlayResource";
 import SignUp from "./Auth/SignUp";
 import SignIn from "./Auth/SignIn";
+import AuthContextProvider from "./context/AuthContextProvider";
+import RequireAuth from "./components/RequireAuth";
 
 export default function App() {
   return (
     <div>
       <CssBaseline />
       <LoadingOverlayResource>
-        <SnackbarProvider>
-          <Router>
-            <Box
-              sx={{
-                bgcolor: (theme) => theme.palette.background.default,
-                minHeight: "100vh",
-                width: "100%",
-              }}
-            >
-              <Routes>
-                <Route
-                  path="/categories/create"
-                  element={<CategoryDetails />}
-                />
-                <Route path="/categories" element={<Categories />} />
-                <Route
-                  path={`/categories/edit/:id`}
-                  element={<CategoryDetails />}
-                />
-                <Route path="auth/signup/" element={<SignUp />}></Route>
-                <Route path="/auth/signin" element={<SignIn />}></Route>
-              </Routes>
-            </Box>
-          </Router>
-        </SnackbarProvider>
+        <AuthContextProvider>
+          <SnackbarProvider>
+            <Router>
+              <Box
+                sx={{
+                  bgcolor: (theme) => theme.palette.background.default,
+                  minHeight: "100vh",
+                  width: "100%",
+                }}
+              >
+                <Routes>
+                  <Route element={<RequireAuth />}>
+                    <Route
+                      path="/categories/create"
+                      element={<CategoryDetails />}
+                    />
+                    <Route path="/categories" element={<Categories />} />
+                    <Route
+                      path={`/categories/edit/:id`}
+                      element={<CategoryDetails />}
+                    />
+                  </Route>
+
+                  <Route path="auth/signup/" element={<SignUp />}></Route>
+                  <Route path="/auth/signin" element={<SignIn />}></Route>
+                </Routes>
+              </Box>
+            </Router>
+          </SnackbarProvider>
+        </AuthContextProvider>
       </LoadingOverlayResource>
     </div>
   );

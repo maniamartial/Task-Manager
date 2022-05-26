@@ -1,11 +1,10 @@
 import { useCallback, useContext, useState } from "react";
 import axios from "axios";
 
-import React from "react";
 import { useSnackbar } from "notistack";
 import formatHttpApiError from "src/helpers/formatHttpError";
 import { LoadingOverlayResourceContext } from "src/components/LoadingOverlayResource";
-
+import getCommonOptions from "src/helpers/axios/getCommonOptions";
 export default function useRequestResource({ endpoint, resourceLabel }) {
   const [resourceList, setResourceList] = useState({
     results: [],
@@ -29,9 +28,11 @@ export default function useRequestResource({ endpoint, resourceLabel }) {
 
   //Fetching data from teh django backend
   const getResourceList = useCallback(() => {
+    //getting files from specific users
+
     setLoading(true);
     axios
-      .get(`/api/${endpoint}/`)
+      .get(`/api/${endpoint}/`, getCommonOptions())
       .then((res) => {
         setLoading(false);
         setResourceList({
@@ -47,7 +48,7 @@ export default function useRequestResource({ endpoint, resourceLabel }) {
     (values, successCallback) => {
       setLoading(true);
       axios
-        .post(`/api/${endpoint}/`, values)
+        .post(`/api/${endpoint}/`, values, getCommonOptions())
         .then(() => {
           setLoading(false);
           enqueueSnackbar(`${resourceLabel} added`);
@@ -57,14 +58,20 @@ export default function useRequestResource({ endpoint, resourceLabel }) {
         })
         .catch(handleRequestResourceError);
     },
-    [endpoint, setLoading]
+    [
+      endpoint,
+      setLoading,
+      enqueueSnackbar,
+      resourceLabel,
+      handleRequestResourceError,
+    ]
   );
 
   const getResource = useCallback(
     (id) => {
       setLoading(true);
       axios
-        .get(`/api/${endpoint}/${id}`)
+        .get(`/api/${endpoint}/${id}`, getCommonOptions())
         .then((res) => {
           setLoading(false);
           const { data } = res;
@@ -79,7 +86,7 @@ export default function useRequestResource({ endpoint, resourceLabel }) {
     (id, values, successCallback) => {
       setLoading(true);
       axios
-        .patch(`/api/${endpoint}/${id}/`, values)
+        .patch(`/api/${endpoint}/${id}/`, values, getCommonOptions())
         .then(() => {
           setLoading(false);
           enqueueSnackbar(`${resourceLabel}/update`);
@@ -89,14 +96,20 @@ export default function useRequestResource({ endpoint, resourceLabel }) {
         })
         .catch(handleRequestResourceError);
     },
-    [endpoint, handleRequestResourceError, setLoading]
+    [
+      endpoint,
+      handleRequestResourceError,
+      setLoading,
+      enqueueSnackbar,
+      resourceLabel,
+    ]
   );
 
   const deleteResource = useCallback(
     (id) => {
       setLoading(true);
       axios
-        .delete(`/api/${endpoint}/${id}/`)
+        .delete(`/api/${endpoint}/${id}/`, getCommonOptions())
         .then(() => {
           setLoading(false);
           enqueueSnackbar(`${resourceLabel} deleted`);
@@ -109,7 +122,14 @@ export default function useRequestResource({ endpoint, resourceLabel }) {
         })
         .catch(handleRequestResourceError);
     },
-    [endpoint, resourceList, handleRequestResourceError, setLoading]
+    [
+      endpoint,
+      resourceList,
+      handleRequestResourceError,
+      setLoading,
+      enqueueSnackbar,
+      resourceLabel,
+    ]
   );
 
   return {

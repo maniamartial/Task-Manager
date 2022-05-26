@@ -14,13 +14,13 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { Navigate, useNavigate } from "react-router-dom";
 import useRequestAuth from "src/hooks/useRequestAuth";
-
+import LoadingButton from "@mui/lab/LoadingButton";
 const validationSchema = yup.object({
   username: yup.string().required("Username / Email Address is required"),
   password: yup.string().required("Password is required"),
 });
 export default function SignIn() {
-  const { login } = useRequestAuth();
+  const { login, loading } = useRequestAuth();
   const navigate = useNavigate();
   const handleSubmit = (values) => {
     login(values, () => {
@@ -94,14 +94,15 @@ export default function SignIn() {
                   control={<Checkbox value="remember" color="primary" />}
                   label="Remember me"
                 />
-                <Button
+                <LoadingButton
                   type="submit"
                   fullWidth
                   variant="contained"
+                  loading={loading}
                   sx={{ mt: 3, mb: 2 }}
                 >
                   Sign In
-                </Button>
+                </LoadingButton>
                 <Grid container>
                   <Grid item xs>
                     <Link href="#" variant="body2">

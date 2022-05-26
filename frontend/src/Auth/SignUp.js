@@ -15,6 +15,7 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import useRequestAuth from "src/hooks/useRequestAuth";
 import { useNavigate } from "react-router-dom";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const validationSchema = yup.object({
   username: yup.string().required("Username is required"),
@@ -142,14 +143,15 @@ export default function SignUp() {
                     />
                   </Grid>
                 </Grid>
-                <Button
+                <LoadingButton
                   type="submit"
                   fullWidth
                   variant="contained"
+                  loading={loading}
                   sx={{ mt: 3, mb: 2 }}
                 >
                   Sign Up
-                </Button>
+                </LoadingButton>
                 <Grid container justifyContent="flex-end">
                   <Grid item>
                     <Link href="#" variant="body2">
