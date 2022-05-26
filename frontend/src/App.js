@@ -7,6 +7,8 @@ import Categories from "./pages/Categories";
 import CategoryDetails from "./pages/Categories/CategoryDetails";
 import { SnackbarProvider } from "notistack";
 import LoadingOverlayResource from "./components/LoadingOverlayResource";
+import SignUp from "./Auth/SignUp";
+import SignIn from "./Auth/SignIn";
 
 export default function App() {
   return (
@@ -32,6 +34,8 @@ export default function App() {
                   path={`/categories/edit/:id`}
                   element={<CategoryDetails />}
                 />
+                <Route path="auth/signup/" element={<SignUp />}></Route>
+                <Route path="/auth/signin" element={<SignIn />}></Route>
               </Routes>
             </Box>
           </Router>
