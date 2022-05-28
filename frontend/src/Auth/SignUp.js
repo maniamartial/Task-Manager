@@ -1,21 +1,17 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
+import LoadingButton from "@mui/lab/LoadingButton";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import * as yup from "yup";
 import { Formik } from "formik";
+import * as yup from "yup";
+import { Link, useNavigate } from "react-router-dom";
+
 import useRequestAuth from "src/hooks/useRequestAuth";
-import { useNavigate } from "react-router-dom";
-import LoadingButton from "@mui/lab/LoadingButton";
 
 const validationSchema = yup.object({
   username: yup.string().required("Username is required"),
@@ -25,30 +21,11 @@ const validationSchema = yup.object({
     .email("Please provide a valid email")
     .required("Email is required"),
 });
-/*function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-const theme = createTheme();
-*/
 
 export default function SignUp() {
   const { register, loading } = useRequestAuth();
   const navigate = useNavigate();
+
   const handleSubmit = (values) => {
     register(values, () => {
       navigate("/auth/signin");
@@ -71,7 +48,6 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-
         <Formik
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
@@ -108,7 +84,6 @@ export default function SignUp() {
                       }
                     />
                   </Grid>
-
                   <Grid item xs={12}>
                     <TextField
                       required
@@ -132,13 +107,14 @@ export default function SignUp() {
                       label="Password"
                       type="password"
                       id="password"
+                      autoComplete="new-password"
                       {...formik.getFieldProps("password")}
                       error={
                         formik.touched.password &&
                         Boolean(formik.errors.password)
                       }
                       helperText={
-                        formik.touched.username && formik.errors.password
+                        formik.touched.password && formik.errors.password
                       }
                     />
                   </Grid>
@@ -154,7 +130,7 @@ export default function SignUp() {
                 </LoadingButton>
                 <Grid container justifyContent="flex-end">
                   <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link to="/auth/signin" key="signin">
                       Already have an account? Sign in
                     </Link>
                   </Grid>

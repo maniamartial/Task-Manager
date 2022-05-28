@@ -5,7 +5,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 
 export const AuthContext = createContext({
-  isAuthenticated: false,
+  isAuthenticated: null,
   setIsAuthenticated: () => {},
   user: null,
   setUser: () => {},
@@ -47,7 +47,6 @@ export default function AuthContextProvider({ children }) {
       loadAuthUser();
     }
   }, [user, isAuthenticated]);
-  console.log(providerValue);
 
   return (
     <AuthContext.Provider value={providerValue}>
