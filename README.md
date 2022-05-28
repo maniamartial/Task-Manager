@@ -13,3 +13,9 @@ While setting passwords, kindly use a strong password i.e more than 8 characters
 This shows teh number of tasks for the user who has logged in only. If you try to access other restricted pages you will get a warning.
 The table has task, color and its editable, where teh user can add unlimited tasks. You are also free to delete the task but be keen while pressing that button( indicated danger by red color)
 
+#TECHNOLOGY USED
+
+React.js - frondend, teh code is clean for ease modification during maintenance
+Django -backend, we opted for django to accelerate teh rate of building teh applixcation, its easeier to build simple and complex API with this technology.
+PostreSQL- we prefered using postegre because its easier and very compatible with teh backend django, which  makes it fast to deploy.
+
