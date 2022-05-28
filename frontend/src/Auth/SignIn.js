@@ -1,10 +1,8 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -12,9 +10,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import useRequestAuth from "src/hooks/useRequestAuth";
 import LoadingButton from "@mui/lab/LoadingButton";
+
 const validationSchema = yup.object({
   username: yup.string().required("Username / Email Address is required"),
   password: yup.string().required("Password is required"),
@@ -23,9 +22,7 @@ export default function SignIn() {
   const { login, loading } = useRequestAuth();
   const navigate = useNavigate();
   const handleSubmit = (values) => {
-    login(values, () => {
-      navigate("/categories");
-    });
+    login(values);
   };
 
   return (
@@ -105,12 +102,12 @@ export default function SignIn() {
                 </LoadingButton>
                 <Grid container>
                   <Grid item xs>
-                    <Link href="#" variant="body2">
+                    <Link to="/auth/password-reset" key="reset-password">
                       Forgot password?
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link to="/auth/signup" key="signup">
                       {"Don't have an account? Sign Up"}
                     </Link>
                   </Grid>

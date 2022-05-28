@@ -18,7 +18,7 @@ import {
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useRequestResource from "src/hooks/useRequestResource";
 import "bootstrap/dist/css/bootstrap.css";
 import ColorBox from "src/components/ColorBox";
@@ -81,7 +81,6 @@ export default function Categories() {
           display: "flex",
           justifyContent: "flex-end",
           mb: 4,
-          mt: 4,
         }}
       >
         <Button
