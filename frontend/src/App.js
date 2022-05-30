@@ -13,7 +13,9 @@ import AuthContextProvider from "./context/AuthContextProvider";
 import RequireAuth from "./components/RequireAuth";
 import RequireNotAuth from "./components/RequireNotAuth";
 import BaseLayout from "./components/BaseLayout";
-
+import Tasks from "./pages/Tasks";
+import TaskDetails from "./pages/Tasks/TaskDetails";
+import Dashboard from "./pages/Dashboard";
 export default function App() {
   return (
     <div>
@@ -40,6 +42,16 @@ export default function App() {
                       path={`/categories/edit/:id`}
                       element={<CategoryDetails />}
                     />
+                    <Route path="/tasks" element={<Tasks />}></Route>
+                    <Route
+                      path="/tasks/create"
+                      element={<TaskDetails />}
+                    ></Route>
+                    <Route
+                      path="/tasks/edit/:id"
+                      element={<TaskDetails />}
+                    ></Route>
+                    <Route path="/" element={<Dashboard />}></Route>
                   </Route>
                 </Route>
                 <Route element={<RequireNotAuth />}>
