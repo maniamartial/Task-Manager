@@ -19,6 +19,6 @@ class TaskSerializer(serializers.ModelSerializer):
         read_only=True, source="category.color")
 
     class Meta:
-        mode = Task
+        model = Task
         fields = "__all__"
         read_only_fields = ["created_by"]

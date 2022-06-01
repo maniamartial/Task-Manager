@@ -1,12 +1,14 @@
 from django.shortcuts import render
-from .serializers import CategorySerializer, TaskSerializer
-from .models import Category, Task
 from rest_framework import viewsets, permissions, filters
+from rest_framework.response import Response
+from .serializers import CategorySerializer, TaskSerializer
 from rest_framework.pagination import PageNumberPagination
+from django.db.models import Count
+from django.db.models.query_utils import Q
+from .models import Task
+from .permissions import TaskPermission
 
 # Create your views here.
-
-# pagination
 
 
 class StandardResultSetPagination(PageNumberPagination):
@@ -28,16 +30,17 @@ class CategoryViewSet(viewsets.ModelViewSet):
         serializer.save(created_by=self.request.user)
 
 
-class TaskviewSet(viewsets.ModelViewSet):
+class TaskViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.IsAuthenticated,
+        TaskPermission
     ]
     serializer_class = TaskSerializer
     pagination_class = StandardResultSetPagination
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title']
-    ordering_fields = ['title']
-    ordering = ['completed']
+    ordering_fields = ['completed', '-created_at']
+    ordering = ['completed', '-created_at']
 
     def get_queryset(self):
         user = self.request.user
@@ -47,13 +50,14 @@ class TaskviewSet(viewsets.ModelViewSet):
         query_params = {}
 
         if completed is not None:
-            query_params['completed'] = completed
+            query_params["completed"] = completed
 
         if priority is not None:
-            query_params['category'] = category
+            query_params["priority"] = priority
 
         if category is not None:
-            query_params['priority'] = priority
+            query_params["category"] = category
+
         return Task.objects.filter(created_by=user, **query_params)
 
     def perform_create(self, serializer):

@@ -11,7 +11,7 @@ const getDesignTokens = (mode) => {
     palette: {
       mode,
     },
-  };
+  };                                                                                                                                                                                                                            
 };
 
 export default function ThemeModeProvider({ children }) {

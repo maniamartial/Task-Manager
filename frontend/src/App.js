@@ -42,7 +42,7 @@ export default function App() {
                       path={`/categories/edit/:id`}
                       element={<CategoryDetails />}
                     />
-                    <Route path="/tasks" element={<Tasks />}></Route>
+                    <Route path="/tasks" element={<Tasks />} />
                     <Route
                       path="/tasks/create"
                       element={<TaskDetails />}

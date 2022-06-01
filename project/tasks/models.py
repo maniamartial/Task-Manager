@@ -13,6 +13,9 @@ class Category(models.Model):
     created_by = models.ForeignKey(User, related_name="categories",
                                    on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
+
 
 class Task(models.Model):
     class Priority(models.IntegerChoices):
@@ -32,3 +35,6 @@ class Task(models.Model):
 
     created_by = models.ForeignKey(
         User, related_name="tasks", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
