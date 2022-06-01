@@ -27,24 +27,25 @@ export default function useRequestResource({ endpoint, resourceLabel }) {
   );
 
   //Fetching data from teh django backend
-  const getResourceList = useCallback(() => {
-    //getting files from specific users
-
-    setLoading(true);
-    axios
-      .get(`/api/${endpoint}/`, getCommonOptions())
-      .then((res) => {
-        setLoading(false);
-        if (res.data.results) {
-          setResourceList(res.data);
-        } else {
-          setResourceList({
-            results: res.data,
-          });
-        }
-      })
-      .catch(handleRequestResourceError);
-  }, [endpoint, handleRequestResourceError, setLoading]);
+  const getResourceList = useCallback(
+    ({ query = "" } = {}) => {
+      setLoading(true);
+      axios
+        .get(`/api/${endpoint}/${query}`, getCommonOptions())
+        .then((res) => {
+          setLoading(false);
+          if (res.data.results) {
+            setResourceList(res.data);
+          } else {
+            setResourceList({
+              results: res.data,
+            });
+          }
+        })
+        .catch(handleRequestResourceError);
+    },
+    [endpoint, handleRequestResourceError, setLoading]
+  );
   //end of fetching data
 
   //Posting data to the backend
