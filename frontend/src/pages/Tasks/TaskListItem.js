@@ -24,7 +24,7 @@ const StyledLink = styled(Link)(({ theme }) => ({
   },
 }));
 
-export default function TaskListItem({ task }) {
+export default function TaskListItem({ task, handleConfirmDelete }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -71,9 +71,10 @@ export default function TaskListItem({ task }) {
                 horizontal: "right",
               }}
             >
-              <MenuItem onClick={null}>
-                <ListItemIcon>
+              <MenuItem>
+                <ListItemIcon variant="danger">
                   <DeleteOutlineIcon fontSize="small" />
+                  Delete
                 </ListItemIcon>
               </MenuItem>
             </Menu>
@@ -111,4 +112,5 @@ TaskListItem.propTypes = {
     description: PropTypes.string,
     priority: PropTypes.number,
   }),
+  handleConfirmDelete: PropTypes.func,
 };
