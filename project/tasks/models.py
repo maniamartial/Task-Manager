@@ -21,7 +21,7 @@ class Task(models.Model):
     class Priority(models.IntegerChoices):
         LOW = 1, "lOW"
         MEDIUM = 2, "Medium"
-        HIGH = 3, "Hight"
+        HIGH = 3, "High"
         CRITICAL = 4, "Criitical"
 
     title = models.CharField(max_length=100)

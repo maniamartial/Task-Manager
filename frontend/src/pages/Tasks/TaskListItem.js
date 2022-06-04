@@ -24,7 +24,11 @@ const StyledLink = styled(Link)(({ theme }) => ({
   },
 }));
 
-export default function TaskListItem({ task, handleConfirmDelete }) {
+export default function TaskListItem({
+  task,
+  handleConfirmDelete,
+  handleUpdateCompleted,
+}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -71,7 +75,11 @@ export default function TaskListItem({ task, handleConfirmDelete }) {
                 horizontal: "right",
               }}
             >
-              <MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleConfirmDelete(task.id);
+                }}
+              >
                 <ListItemIcon variant="danger">
                   <DeleteOutlineIcon fontSize="small" />
                   Delete
@@ -85,7 +93,9 @@ export default function TaskListItem({ task, handleConfirmDelete }) {
             <Checkbox
               sx={{ padding: (theme) => `0 ${theme.spacing(0.5)} 0 0` }}
               checked={task.completed || false}
-              onClick={null}
+              onClick={() => {
+                handleUpdateCompleted(task);
+              }}
             />
             <StyledLink to={`/tasks/edit/${task.id}`} key={"tasks-edit"}>
               {task.title}
@@ -113,4 +123,5 @@ TaskListItem.propTypes = {
     priority: PropTypes.number,
   }),
   handleConfirmDelete: PropTypes.func,
+  handleUpdateCompleted: PropTypes.func,
 };

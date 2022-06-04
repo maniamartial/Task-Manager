@@ -53,7 +53,7 @@ const validationSchema = yup.object({
   category: yup.number().required("Category is required"),
   priority: yup.string().required("Priority is required"),
 });
-const categories = [
+/*const categories = [
   {
     id: 1,
     name: "Feature",
@@ -65,7 +65,8 @@ const categories = [
     name: "Ukweli mtupu",
     color: "jjjjjj",
   },
-];
+];*/
+
 export default function TaskDetails() {
   const { getResourceList, resourceList: categoryList } = useRequestResource({
     endpoint: "categories",

@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function getCommonOptions() {
   const authToken = localStorage.getItem("authToken");
 

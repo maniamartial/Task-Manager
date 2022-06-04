@@ -92,9 +92,20 @@ export default function useRequestResource({ endpoint, resourceLabel }) {
       setLoading(true);
       axios
         .patch(`/api/${endpoint}/${id}/`, values, getCommonOptions())
-        .then(() => {
+        .then((res) => {
+          const updated = res.data;
+          const newResourceList = {
+            results: resourceList.results.map((r) => {
+              if (r.id === id) {
+                return updated;
+              }
+              return r;
+            }),
+            count: resourceList.count,
+          };
+          setResourceList(newResourceList);
           setLoading(false);
-          enqueueSnackbar(`${resourceLabel}/update`);
+          enqueueSnackbar(`${resourceLabel} updated`);
           if (successCallback) {
             successCallback();
           }
@@ -103,10 +114,11 @@ export default function useRequestResource({ endpoint, resourceLabel }) {
     },
     [
       endpoint,
-      handleRequestResourceError,
-      setLoading,
       enqueueSnackbar,
       resourceLabel,
+      handleRequestResourceError,
+      setLoading,
+      resourceList,
     ]
   );
 

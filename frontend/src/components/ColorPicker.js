@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { BlockPicker, SketchPicker } from "react-color";
+import { SketchPicker } from "react-color";
 import { TextField, Box } from "@mui/material";
 import ColorBox from "./ColorBox";
 

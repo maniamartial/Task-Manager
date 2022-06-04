@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
-import Prototype from "prop-types";
+import React, { useState, useMemo } from "react";
 import { PropTypes } from "prop-types";
 import { Backdrop, Box, CircularProgress } from "@mui/material";
 
