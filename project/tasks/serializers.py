@@ -1,4 +1,5 @@
 
+from dataclasses import fields
 from rest_framework import serializers
 from django.shortcuts import render
 from .models import Category, Task
@@ -22,3 +23,11 @@ class TaskSerializer(serializers.ModelSerializer):
         model = Task
         fields = "__all__"
         read_only_fields = ["created_by"]
+
+
+class DashboardTaskCompletionStatSerializer(serializers.ModelSerializer):
+    count = serializers.IntegerField()
+
+    class Meta:
+        model = Task
+        fields = ("completed", "count")

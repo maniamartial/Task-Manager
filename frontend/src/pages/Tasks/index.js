@@ -8,13 +8,13 @@ import {
   Typography,
   Pagination,
 } from "@mui/material";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import queryString from "query-string";
 import Masonry from "react-masonry-css";
 
 import TaskListItem from "./TaskListItem";
 import useRequestResource from "src/hooks/useRequestResource";
-import Filters from "src/data/Filters";
+import Filters from "./Filters";
 
 // const results = [
 //     {
@@ -90,7 +90,7 @@ export default function Tasks() {
       search: search,
     };
     const newSearch = queryString.stringify(newQuery);
-    navigate(`${location.pathname}? ${newSearch}`);
+    navigate(`${location.pathname}?${newSearch}`);
   };
 
   useEffect(() => {
@@ -100,7 +100,7 @@ export default function Tasks() {
   return (
     <div>
       <Dialog open={open} onClose={handleDeleteClose}>
-        <DialogTitle>Are you sure you want to delete?</DialogTitle>
+        <DialogTitle>Are you sure you want to delete this task?</DialogTitle>
         <DialogActions>
           <Button onClick={handleDelete}>Yes</Button>
           <Button onClick={handleDeleteClose}>No</Button>
@@ -147,13 +147,14 @@ export default function Tasks() {
           );
         })}
       </Masonry>
+
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Pagination
           color="primary"
           count={Math.ceil(resourceList.count / pageSize)}
           page={query.page ? parseInt(query.page) : 1}
           onChange={handleChangePagination}
-        ></Pagination>
+        />
       </Box>
     </div>
   );

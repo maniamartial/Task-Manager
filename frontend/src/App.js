@@ -16,6 +16,7 @@ import BaseLayout from "./components/BaseLayout";
 import Tasks from "./pages/Tasks";
 import TaskDetails from "./pages/Tasks/TaskDetails";
 import Dashboard from "./pages/Dashboard";
+import "./index.css";
 export default function App() {
   return (
     <div>

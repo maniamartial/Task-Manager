@@ -15,6 +15,7 @@ import {
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Link } from "react-router-dom";
+import priorityOptionsData from "src/data/priorityOptionsData";
 
 const StyledLink = styled(Link)(({ theme }) => ({
   textDecoration: "none",
@@ -41,7 +42,15 @@ export default function TaskListItem({
   };
 
   return (
-    <Card elevation={3} sx={{ mb: 2 }}>
+    <Card
+      elevation={3}
+      sx={{
+        mb: 2,
+        borderLeft: (theme) => `${theme.spacing(0.5)} solid 
+    ${priorityOptionsData[task.priority].color || "#fff"}}`,
+      }}
+      
+    >
       <CardHeader
         sx={{
           pt: 1,
