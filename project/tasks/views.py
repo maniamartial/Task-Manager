@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from rest_framework import viewsets, permissions, filters
 from rest_framework.response import Response
-from .serializers import CategorySerializer, DashboardTaskCompletionStatSerializer, TaskSerializer
+from .serializers import CategorySerializer, DashboardTaskCategorySerializer, DashboardTaskCompletionStatSerializer, TaskSerializer
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Count
 from django.db.models.query_utils import Q
-from .models import Task
+from .models import Category, Task
 from .permissions import TaskPermission
 from django.db.models import Count
 
@@ -76,4 +76,21 @@ class DashboardTaskCompletionStatViewSet(viewsets.ViewSet):
         queryset = Task.objects.filter(created_by=user).values(
             "completed").annotate(count=Count("completed"))
         serializer = DashboardTaskCompletionStatSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class DashboardTaskByCategoryViewSet(viewsets.ViewSets):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    def list(self, request):
+        user = self.request.user
+        tasks_filter = {}
+        completed = self.request.query_params.get('completed')
+        if completed is not None:
+            tasks_filter['tasks_completed'] = completed
+        queryset = Category.objects.filter(created_by=user).annotate(
+            count=Count('tasks', filter=Q(**tasks_filter)))
+        serializer = DashboardTaskCategorySerializer(queryset, many=True)
         return Response(serializer.data)

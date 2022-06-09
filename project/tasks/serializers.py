@@ -1,5 +1,5 @@
 
-from dataclasses import fields
+from dataclasses import field, fields
 from rest_framework import serializers
 from django.shortcuts import render
 from .models import Category, Task
@@ -31,3 +31,10 @@ class DashboardTaskCompletionStatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ("completed", "count")
+
+class DashboardTaskCategorySerializer(serializers.ModelSerializer):
+    count=serializers.IntegerField()
+
+    class Meta:
+        model=Category
+        fields=('id', 'name', 'color', 'count')
