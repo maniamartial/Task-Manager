@@ -9,7 +9,7 @@ export default function RequireNotAuth() {
     return <div>Loading....</div>;
   }
   if (isAuthenticated === true) {
-    return <Navigate to="/categories" />;
+    return <Navigate to="/" />;
   }
   return <Outlet />;
 }

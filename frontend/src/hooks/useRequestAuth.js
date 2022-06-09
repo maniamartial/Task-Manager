@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useContext, useCallback } from "react";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import formatHttpApiError from "src/helpers/formatHttpError";

@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useRequestAuth from "src/hooks/useRequestAuth";
 import LoadingButton from "@mui/lab/LoadingButton";
 
@@ -20,7 +20,7 @@ const validationSchema = yup.object({
 });
 export default function SignIn() {
   const { login, loading } = useRequestAuth();
-  const navigate = useNavigate();
+
   const handleSubmit = (values) => {
     login(values);
   };

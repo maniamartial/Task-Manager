@@ -10,7 +10,6 @@ import {
   TextField,
   CircularProgress,
   useTheme,
-  modal,
 } from "@mui/material";
 import PropTypes from "prop-types";
 import { AccountCircle } from "@mui/icons-material";

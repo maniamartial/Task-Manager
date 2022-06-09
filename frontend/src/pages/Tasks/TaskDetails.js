@@ -17,33 +17,12 @@ import {
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import useRequestResource from "src/hooks/useRequestResource";
-import { cyan, lightGreen, amber, red } from "@mui/material/colors";
+//import { cyan, lightGreen, amber, red } from "@mui/material/colors";
 
 import ColorBox from "src/components/ColorBox";
-
-const priorityOptionsData = {
-  1: {
-    label: "Low",
-    color: lightGreen[500],
-  },
-  2: {
-    label: "Medium",
-    color: cyan[500],
-  },
-  3: {
-    label: "High",
-    color: amber[500],
-  },
-  4: {
-    label: "Critical",
-    color: red[500],
-  },
-};
-const priorityOptionsDataList = Object.keys(priorityOptionsData).map((key) => ({
-  key,
-  ...priorityOptionsData[key],
-  value: key,
-}));
+import priorityOptionsData, {
+  priorityOptionsDataList,
+} from "src/data/priorityOptionsData";
 
 const validationSchema = yup.object({
   title: yup
@@ -53,7 +32,7 @@ const validationSchema = yup.object({
   category: yup.number().required("Category is required"),
   priority: yup.string().required("Priority is required"),
 });
-const categories = [
+/*const categories = [
   {
     id: 1,
     name: "Feature",
@@ -65,7 +44,8 @@ const categories = [
     name: "Ukweli mtupu",
     color: "jjjjjj",
   },
-];
+];*/
+
 export default function TaskDetails() {
   const { getResourceList, resourceList: categoryList } = useRequestResource({
     endpoint: "categories",
