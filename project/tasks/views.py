@@ -79,7 +79,7 @@ class DashboardTaskCompletionStatViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
 
-class DashboardTaskByCategoryViewSet(viewsets.ViewSets):
+class DashboardTaskByCategoryViewSet(viewsets.ViewSet):
     permission_classes = [
         permissions.IsAuthenticated
     ]
