@@ -11,18 +11,18 @@ import formatHttpApiError from "src/helpers/formatHttpError";
 import getCommonOptions from "src/helpers/axios/getCommonOptions";
 import StatCard from "./StartCard";
 
-export default function TaskCompletion() {
+export default function TasksCompletion() {
   const [isLoading, setIsLoading] = useState(false);
   const [completionStats, setCompletionStats] = useState({
     completed: null,
     pending: null,
   });
-
   const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("api/dashboard/tasks-completion/", getCommonOptions())
+      .get("/api/dashboard/tasks-completion/", getCommonOptions())
       .then((res) => {
         const { data } = res;
         if (data) {
@@ -42,6 +42,8 @@ export default function TaskCompletion() {
       })
       .catch((err) => {
         const formattedError = formatHttpApiError(err);
+        enqueueSnackbar(formattedError);
+        setIsLoading(false);
       });
   }, [enqueueSnackbar, setIsLoading]);
 
@@ -55,25 +57,23 @@ export default function TaskCompletion() {
         mb: (theme) => theme.spacing(2),
       }}
     >
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         <StatCard
           title="Total Tasks"
           value={totalTasksCount}
-          loading={false}
+          loading={isLoading}
           icon={<AssignmentIcon fontSize="small" />}
         />
-
         <StatCard
           title="Tasks Due"
           value={completionStats.pending || 0}
-          loading={false}
+          loading={isLoading}
           icon={<AssignmentLateIcon fontSize="small" />}
         />
-
         <StatCard
           title="Tasks Completed"
           value={completionStats.completed || 0}
-          loading={false}
+          loading={isLoading}
           icon={<CheckIcon fontSize="small" />}
         />
       </Grid>

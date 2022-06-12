@@ -1,14 +1,12 @@
 from django.shortcuts import render
 from rest_framework import viewsets, permissions, filters
 from rest_framework.response import Response
-from .serializers import CategorySerializer, DashboardTaskCategorySerializer, DashboardTaskCompletionStatSerializer, TaskSerializer
+from .serializers import CategorySerializer, DashboardTaskCategorySerializer,  DashboardTaskCompletionStatSerializer, TaskSerializer
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Count
 from django.db.models.query_utils import Q
 from .models import Category, Task
 from .permissions import TaskPermission
-from django.db.models import Count
-
 
 # Create your views here.
 
@@ -37,6 +35,7 @@ class TaskViewSet(viewsets.ModelViewSet):
         permissions.IsAuthenticated,
         TaskPermission
     ]
+
     serializer_class = TaskSerializer
     pagination_class = StandardResultSetPagination
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
@@ -74,7 +73,7 @@ class DashboardTaskCompletionStatViewSet(viewsets.ViewSet):
     def list(self, request):
         user = self.request.user
         queryset = Task.objects.filter(created_by=user).values(
-            "completed").annotate(count=Count("completed"))
+            'completed').annotate(count=Count('completed'))
         serializer = DashboardTaskCompletionStatSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -89,8 +88,9 @@ class DashboardTaskByCategoryViewSet(viewsets.ViewSet):
         tasks_filter = {}
         completed = self.request.query_params.get('completed')
         if completed is not None:
-            tasks_filter['tasks_completed'] = completed
-        queryset = Category.objects.filter(created_by=user).annotate(
-            count=Count('tasks', filter=Q(**tasks_filter)))
+            tasks_filter['tasks__completed'] = completed
+        queryset = Category.objects.filter(
+            created_by=user
+        ).annotate(count=Count('tasks', filter=Q(**tasks_filter)))
         serializer = DashboardTaskCategorySerializer(queryset, many=True)
         return Response(serializer.data)

@@ -36,7 +36,6 @@ const loadingBox = () => {
     </Box>
   );
 };
-
 export function CardContentDistributionChart({
   chartData,
   tableData,
@@ -135,23 +134,3 @@ CardContentDistributionChart.propTypes = {
 };
 
 export default React.memo(CardContentDistributionChart);
-
-/*
- {chartData ? (
-                    <Doughnut
-                      height={250}
-                      width={250}
-                      data={chartData}
-                      options={{
-                        cutout: "90%",
-                        plugins: {
-                          legend: {
-                            labels: {
-                              color: textColor,
-                            },
-                          },
-                        },
-                      }}
-                    />
-                  ) : null}
-*/
