@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'users',
     'tasks'
 ]
+APPEND_SLASH = False
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'you@localhost'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 DJOSER = {

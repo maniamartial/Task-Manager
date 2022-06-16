@@ -7,34 +7,32 @@ import formatHttpApiError from "src/helpers/formatHttpError";
 import StatChart from "./StatChart";
 import Filters from "./Filters";
 
-/*
-const tableData = [
-  {
-    label: "Feature",
-    color: "#ff0000",
-    count: 5,
-  },
-  {
-    label: "Bug",
-    color: "#cccccc",
-    count: 2,
-  },
-];
-
-const chartData = {
-  datasets: [
-    {
-      backgroundColor: ["#ff0000", "#cccccc"],
-      borderColor: ["#ff0000", "#cccccc"],
-      borderWidth: 1,
-      data: [2, 5],
-    },
-  ],
-  labels: ["Feature", "Bug"],
-};
-*/
+// const tableData = [
+//     {
+//         label: "Feature",
+//         color: "#ff0000",
+//         count: 5
+//     },
+//     {
+//         label: "Bug",
+//         color: "#cccccc",
+//         count: 2
+//     }
+// ];
+// const chartData = {
+//     datasets: [
+//         {
+//             backgroundColor: ["#ff0000", "#cccccc"],
+//             borderColor: ["#ff0000", "#cccccc"],
+//             borderWidth: 1,
+//             data: [2, 5]
+//         }
+//     ],
+//     labels: ["Feature", "Bug"]
+// }
 
 const generateChartData = (data = []) => {
+  console.log("Imefikiwa le asubui");
   let chartData = {
     labels: [],
     datasets: [
@@ -73,7 +71,6 @@ export default function TasksByCategory() {
   const [queries, setQueries] = useState({
     completed: "False",
   });
-
   const [apiUrl, setApiUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [chartData, setChartData] = useState(null);
