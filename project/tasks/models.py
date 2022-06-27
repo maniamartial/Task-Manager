@@ -7,6 +7,8 @@ User = get_user_model()
 
 
 class Category(models.Model):
+    class Meta:
+        verbose_name_plural = "categories"
     name = models.CharField(max_length=100)
     color = models.CharField(max_length=6)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -19,7 +21,7 @@ class Category(models.Model):
 
 class Task(models.Model):
     class Priority(models.IntegerChoices):
-        LOW = 1, "lOW"
+        LOW = 1, "Low"
         MEDIUM = 2, "Medium"
         HIGH = 3, "High"
         CRITICAL = 4, "Criitical"

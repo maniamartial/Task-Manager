@@ -10,7 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
+import requests
 from pathlib import Path
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,19 +44,30 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework.authtoken',
+    'anymail',
     'djoser',
     'rest_framework',
     'users',
-    'tasks'
+    'tasks',
+    'frontend'
 ]
-APPEND_SLASH = False
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'you@localhost'
+GOOGLE_RECAPTCHA_SECRET = "6Le9wJogAAAAAHojOQNQa3TexE6Hi4_8jFFsSGNHl"
+# 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+DEFAULT_FROM_EMAIL = "you@sandbox9ab8e66dfe3d4289942a119c468a1bbe.mailgun.org"
+
+ANYMAIL = {
+    "MAILGUN_API_KEY": "a5419d54a8564c7e890d9ed9a4881f84-50f43e91-eb52cd8b"
+}
 
 AUTH_USER_MODEL = 'users.CustomUser'
 DJOSER = {
     "PASSWORD_RESET_CONFIRM_URL": "auth/password-reset/confirm/{uid}/{token}",
+    "SERIALIZERS": {
+        "password_reset": "users.serializers.CustomSendEmailResetSerializer"
+    },
+    "PASSWORD_RESET_CONFIRM_RETYPE": True
 }
 
 REST_FRAMEWORK = {
@@ -133,10 +150,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'frontend/static')
 STATIC_URL = '/static/'
 
 # Default primary key field type
