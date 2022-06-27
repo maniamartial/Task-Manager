@@ -3,37 +3,36 @@ import { useSnackbar } from "notistack";
 import axios from "axios";
 
 import getCommonOptions from "src/helpers/axios/getCommonOptions";
-
 import formatHttpApiError from "src/helpers/formatHttpError";
 import StatChart from "./StatChart";
+import Filters from "./Filters";
 
-/*
-const tableData = [
-  {
-    label: "Feature",
-    color: "#ff0000",
-    count: 5,
-  },
-  {
-    label: "Joseph Mania",
-    color: "#cccccc",
-    count: 5,
-  },
-];
-
-const chartData = {
-  dataset: [
-    {
-      backgroundColor: ["#ff0000", "#cccccc"],
-      borderColor: ["#ff0000", "#cccccc"],
-      borderWidth: 1,
-      data: [2, 5],
-    },
-  ],
-};
-*/
+// const tableData = [
+//     {
+//         label: "Feature",
+//         color: "#ff0000",
+//         count: 5
+//     },
+//     {
+//         label: "Bug",
+//         color: "#cccccc",
+//         count: 2
+//     }
+// ];
+// const chartData = {
+//     datasets: [
+//         {
+//             backgroundColor: ["#ff0000", "#cccccc"],
+//             borderColor: ["#ff0000", "#cccccc"],
+//             borderWidth: 1,
+//             data: [2, 5]
+//         }
+//     ],
+//     labels: ["Feature", "Bug"]
+// }
 
 const generateChartData = (data = []) => {
+  console.log("Imefikiwa le asubui");
   let chartData = {
     labels: [],
     datasets: [
@@ -45,7 +44,6 @@ const generateChartData = (data = []) => {
       },
     ],
   };
-
   data.forEach((d) => {
     chartData.labels.push(d.name);
     chartData.datasets[0].data.push(d.count);
@@ -59,7 +57,7 @@ const generateTableData = (data = []) => {
   const dataForTable = data.map((d) => {
     return {
       label: d.name,
-      color: `#{d.color}`,
+      color: `#${d.color}`,
       count: d.count,
     };
   });
@@ -67,9 +65,12 @@ const generateTableData = (data = []) => {
 };
 
 const baseApiUrl = "/api/dashboard/tasks-category-distribution/";
-export default function TaskByCategory() {
-  const [enqueueSnackbar] = useSnackbar();
-  const [queries, setQueries] = useState({ completed: "False" });
+
+export default function TasksByCategory() {
+  const { enqueueSnackbar } = useSnackbar();
+  const [queries, setQueries] = useState({
+    completed: "False",
+  });
   const [apiUrl, setApiUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [chartData, setChartData] = useState(null);
@@ -77,7 +78,7 @@ export default function TaskByCategory() {
 
   useEffect(() => {
     if (queries.completed === "True" || queries.completed === "False") {
-      setApiUrl(`${baseApiUrl}? completed=${queries.completed}`);
+      setApiUrl(`${baseApiUrl}?completed=${queries.completed}`);
       return;
     }
     setApiUrl(baseApiUrl);
@@ -103,13 +104,14 @@ export default function TaskByCategory() {
         const formattedError = formatHttpApiError(err);
         enqueueSnackbar(formattedError);
       });
-  }, [enqueueSnackbar, isLoading, apiUrl, setChartData, setTableData]);
+  }, [enqueueSnackbar, setIsLoading, setTableData, setChartData, apiUrl]);
 
   return (
     <StatChart
       tableData={tableData}
       chartData={chartData}
       isLoading={isLoading}
+      filters={<Filters setQueries={setQueries} />}
     />
   );
 }

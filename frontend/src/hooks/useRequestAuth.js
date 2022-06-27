@@ -22,6 +22,55 @@ export default function useRequestAuth() {
     [enqueueSnackbar, setLoading, setError]
   );
 
+   const requestResetPassword = useCallback((email, gRecaptchaRes) => {
+        setLoading(true);
+        axios.post("/api/auth/users/reset_password/", { email, g_recaptcha_response: gRecaptchaRes })
+            .then(() => {
+                setLoading(false);
+                enqueueSnackbar("Reset password link will be sent to the provided email")
+
+            }).catch(handleRequestError)
+    }, [enqueueSnackbar, handleRequestError])
+
+  /*
+  const requestResetPassword = useCallback(
+    (email, successCallback) => {
+      setLoading(true);
+      axios
+        .post("/api/auth/users/reset_password/", { email })
+        .then(() => {
+          setLoading(false);
+          enqueueSnackbar(
+            "reset password link wil be sent to the provided email"
+          );
+
+          if (successCallback) {
+            successCallback();
+          }
+        })
+        .catch(handleRequestError);
+    },
+    [enqueueSnackbar, handleRequestError]
+  );*/
+
+  const resetPassword = useCallback(
+    (data, successCallback) => {
+      setLoading(true);
+      axios
+        .post("/api/auth/users/reset_password_confirm/", data)
+        .then(() => {
+          enqueueSnackbar("successfully updated password");
+          setLoading(false);
+          if (successCallback) {
+            successCallback();
+          }
+        })
+        .catch(handleRequestError);
+    },
+    [enqueueSnackbar, handleRequestError]
+  );
+
+
   const register = useCallback(
     ({ username, email, password }, successCallback) => {
       setLoading(true);
@@ -81,5 +130,7 @@ export default function useRequestAuth() {
     logoutPending,
     loading,
     error,
+    requestResetPassword,
+    resetPassword,
   };
 }

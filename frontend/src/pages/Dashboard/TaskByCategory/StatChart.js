@@ -67,7 +67,7 @@ export function CardContentDistributionChart({
                 <div style={{ height: "220px", width: "220px" }}>
                   {chartData ? (
                     <Doughnut
-                      height={250}
+                      height={450}
                       width={250}
                       data={chartData}
                       options={{
@@ -135,23 +135,3 @@ CardContentDistributionChart.propTypes = {
 };
 
 export default React.memo(CardContentDistributionChart);
-
-/*
- {chartData ? (
-                    <Doughnut
-                      height={250}
-                      width={250}
-                      data={chartData}
-                      options={{
-                        cutout: "90%",
-                        plugins: {
-                          legend: {
-                            labels: {
-                              color: textColor,
-                            },
-                          },
-                        },
-                      }}
-                    />
-                  ) : null}
-*/

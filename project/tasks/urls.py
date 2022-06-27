@@ -6,7 +6,7 @@ router.register(r'api/categories', CategoryViewSet, 'categories')
 router.register(r'api/tasks', TaskViewSet, 'tasks'),
 router.register("api/dashboard/tasks-completion",
                 DashboardTaskCompletionStatViewSet, "tasks-completion")
-router.register("api/dashboard/task-category-distribution", DashboardTaskCompletionStatViewSet,
+router.register("api/dashboard/tasks-category-distribution", DashboardTaskCompletionStatViewSet,
                 'task-category-distribution')
 
 urlpatterns = router.urls
