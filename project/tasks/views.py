@@ -10,26 +10,27 @@ from .permissions import TaskPermission
 
 # Create your views here.
 
-
+#Setting pagination from backend
 class StandardResultSetPagination(PageNumberPagination):
     page_size = 6
     page_size_query_param = 'page_size'
     max_page_size = 6
 
-
+#view the categories through API
 class CategoryViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticated
     ]
+    #import this from serilalizer file, just like we do with forms
     serializer_class = CategorySerializer
-
+#Query the database about the data you want to be shown, in this case is category data
     def get_queryset(self):
         return self.request.user.categories.all()
-
+#You can create the category, but after loggin in..
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
-
+#let api view the task from db
 class TaskViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticated,

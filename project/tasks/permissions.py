@@ -1,7 +1,7 @@
 from rest_framework import permissions
 from .models import Category
 
-
+#Give permission only if data is available
 class TaskPermission(permissions.BasePermission):
     message = 'Category not found'
 
