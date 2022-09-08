@@ -11,14 +11,14 @@ To add to hat, we have profile symbol in the left zone, where user can logout or
 
 #HOMEPAGE
 
-This shows teh number of tasks for the user who has logged in only. If you try to access other restricted pages you will get a warning.
-The table has task, color and its editable, where teh user can add unlimited tasks. You are also free to delete the task but be keen while pressing that button( indicated danger by red color)
+This shows the number of tasks for the user who has logged in only. If you try to access other restricted pages you will get a warning.
+The table has task, color and its editable, where the user can add unlimited tasks. You are also free to delete the task but be keen while pressing that button( indicated danger by red color)
 On the left side, there is a menu, while viewing on the mobile phone, just click on three sticks and it will open. It has taskmanager, dashboard  and Categories. Each ne has its own specific page for different functionality.
 
 #TECHNOLOGY USED
 
-React.js  -frondend, teh code is clean for ease modification during maintenance.
+React.js  -frondend, the code is clean for ease modification during maintenance.
 
-Django    -backend, we opted for django to accelerate teh rate of building teh applixcation, its easeier to build simple and complex API with this technology.
+Django    -backend, we opted for django to accelerate the rate of building thh applixcation, its easeier to build simple and complex API with this technology.
 
-PostreSQL -we prefered using postegre because its easier and very compatible with teh backend django, which  makes it fast to deploy.
+PostreSQL -we prefered using postegre because its easier and very compatible with the backend django, which  makes it fast to deploy.
