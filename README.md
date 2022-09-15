@@ -13,7 +13,7 @@ To add to hat, we have profile symbol in the left zone, where user can logout or
 
 This shows the number of tasks for the user who has logged in only. If you try to access other restricted pages you will get a warning.
 The table has task, color and its editable, where the user can add unlimited tasks. You are also free to delete the task but be keen while pressing that button( indicated danger by red color)
-On the left side, there is a menu, while viewing on the mobile phone, just click on three sticks and it will open. It has taskmanager, dashboard  and Categories. Each ne has its own specific page for different functionality.
+On the left side, there is a menu, while viewing on the mobile phone, just click on three sticks and it will open. It has taskmanager, dashboard  and Categories. Each ne has its own specific page for different functionalities.
 
 #TECHNOLOGY USED
 
